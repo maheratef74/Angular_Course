@@ -1,0 +1,18 @@
+<div id="Slider" class="carousel slide" aria-label="Custom image slider">
+	
+
+	<div class="carousel-inner">
+		@for (s of slides; track $index) {
+			<div class="carousel-item" [class.active]="$index === currentIndex()">
+				<img [src]="s.imageUrl" class="d-block w-100" [alt]="'Slide ' + ($index + 1)" />
+			</div>
+		}
+	</div>
+</div>
+
+<div class="d-flex justify-content-center gap-2 mt-3">
+	<button class="btn btn-outline-primary" type="button" (click)="prev()">Prev</button>
+	<button class="btn btn-success" type="button" (click)="play()">Play</button>
+	<button class="btn btn-danger" type="button" (click)="stop()">Stop</button>
+	<button class="btn btn-outline-primary" type="button" (click)="next()">Next</button>
+</div>

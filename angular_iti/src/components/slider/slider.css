@@ -1,0 +1,46 @@
+#Slider {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.carousel-inner {
+  position: relative;
+  overflow: hidden;
+  min-height: 250px;
+}
+
+.carousel-item {
+  display: none;
+  position: absolute;
+  inset: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.carousel-item.active {
+  display: block;
+  position: relative;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}
