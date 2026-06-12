@@ -1,0 +1,203 @@
+<div class="form-container py-5 d-flex justify-content-center">
+  <div class="form-card p-4 p-md-5 rounded-4 shadow-lg w-100 max-width-lg">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h2 class="fw-bold mb-1">{{ isEditMode ? 'Edit Product' : 'Add New Product' }}</h2>
+        <p class="text-secondary mb-0">Fill out the details below to update or list the device.</p>
+      </div>
+      <a routerLink="/products" class="btn btn-outline-secondary btn-sm px-3 rounded-3">
+        &larr; Back
+      </a>
+    </div>
+
+    <form #productForm="ngForm" (ngSubmit)="productForm.form.valid && onSubmit()" novalidate>
+      <div class="row g-3">
+        <!-- Title -->
+        <div class="col-12">
+          <label for="title" class="form-label fw-semibold">Product Title</label>
+          <input 
+            type="text" 
+            id="title" 
+            name="title" 
+            class="form-control" 
+            placeholder="e.g. iPhone 15 Pro"
+            [(ngModel)]="product.title" 
+            #titleInput="ngModel" 
+            required 
+            minlength="3"
+            [class.is-invalid]="titleInput.invalid && (titleInput.dirty || titleInput.touched || productForm.submitted)"
+            [class.is-valid]="titleInput.valid && (titleInput.dirty || titleInput.touched)"
+          >
+          @if (titleInput.invalid && (titleInput.dirty || titleInput.touched || productForm.submitted)) {
+            <div class="invalid-feedback">
+              @if (titleInput.errors?.['required']) {
+                Title is required.
+              }
+              @if (titleInput.errors?.['minlength']) {
+                Title must be at least 3 characters long.
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Brand -->
+        <div class="col-md-6">
+          <label for="brand" class="form-label fw-semibold">Brand</label>
+          <input 
+            type="text" 
+            id="brand" 
+            name="brand" 
+            class="form-control" 
+            placeholder="e.g. Apple, Samsung"
+            [(ngModel)]="product.brand" 
+            #brandInput="ngModel" 
+            required
+            [class.is-invalid]="brandInput.invalid && (brandInput.dirty || brandInput.touched || productForm.submitted)"
+            [class.is-valid]="brandInput.valid && (brandInput.dirty || brandInput.touched)"
+          >
+          @if (brandInput.invalid && (brandInput.dirty || brandInput.touched || productForm.submitted)) {
+            <div class="invalid-feedback">
+              Brand is required.
+            </div>
+          }
+        </div>
+
+        <!-- Category -->
+        <div class="col-md-6">
+          <label for="category" class="form-label fw-semibold">Category</label>
+          <select 
+            id="category" 
+            name="category" 
+            class="form-select" 
+            [(ngModel)]="product.category" 
+            #categoryInput="ngModel" 
+            required
+            [class.is-invalid]="categoryInput.invalid && (categoryInput.dirty || categoryInput.touched || productForm.submitted)"
+            [class.is-valid]="categoryInput.valid && (categoryInput.dirty || categoryInput.touched)"
+          >
+            <option value="" disabled selected>Select category</option>
+            @for (cat of categories; track cat) {
+              <option [value]="cat">{{ cat }}</option>
+            }
+          </select>
+          @if (categoryInput.invalid && (categoryInput.dirty || categoryInput.touched || productForm.submitted)) {
+            <div class="invalid-feedback">
+              Please select a category.
+            </div>
+          }
+        </div>
+
+        <!-- Price -->
+        <div class="col-md-6">
+          <label for="price" class="form-label fw-semibold">Price ($)</label>
+          <input 
+            type="number" 
+            id="price" 
+            name="price" 
+            class="form-control" 
+            placeholder="e.g. 999"
+            [(ngModel)]="product.price" 
+            #priceInput="ngModel" 
+            required 
+            min="1"
+            [class.is-invalid]="priceInput.invalid && (priceInput.dirty || priceInput.touched || productForm.submitted)"
+            [class.is-valid]="priceInput.valid && (priceInput.dirty || priceInput.touched)"
+          >
+          @if (priceInput.invalid && (priceInput.dirty || priceInput.touched || productForm.submitted)) {
+            <div class="invalid-feedback">
+              @if (priceInput.errors?.['required']) {
+                Price is required.
+              }
+              @if (priceInput.errors?.['min']) {
+                Price must be greater than 0.
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Stock -->
+        <div class="col-md-6">
+          <label for="stock" class="form-label fw-semibold">Stock Quantity</label>
+          <input 
+            type="number" 
+            id="stock" 
+            name="stock" 
+            class="form-control" 
+            placeholder="e.g. 10"
+            [(ngModel)]="product.stock" 
+            #stockInput="ngModel" 
+            required 
+            min="0"
+            [class.is-invalid]="stockInput.invalid && (stockInput.dirty || stockInput.touched || productForm.submitted)"
+            [class.is-valid]="stockInput.valid && (stockInput.dirty || stockInput.touched)"
+          >
+          @if (stockInput.invalid && (stockInput.dirty || stockInput.touched || productForm.submitted)) {
+            <div class="invalid-feedback">
+              @if (stockInput.errors?.['required']) {
+                Stock is required.
+              }
+              @if (stockInput.errors?.['min']) {
+                Stock cannot be negative.
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Image URL -->
+        <div class="col-12">
+          <label for="thumbnail" class="form-label fw-semibold">Image URL (Optional)</label>
+          <input 
+            type="url" 
+            id="thumbnail" 
+            name="thumbnail" 
+            class="form-control" 
+            placeholder="https://example.com/image.jpg"
+            [(ngModel)]="product.thumbnail" 
+            #thumbnailInput="ngModel"
+          >
+        </div>
+
+        <!-- Description -->
+        <div class="col-12">
+          <label for="description" class="form-label fw-semibold">Description</label>
+          <textarea 
+            id="description" 
+            name="description" 
+            rows="4" 
+            class="form-control" 
+            placeholder="Write a descriptive overview of the product..."
+            [(ngModel)]="product.description" 
+            #descInput="ngModel" 
+            required 
+            minlength="10"
+            [class.is-invalid]="descInput.invalid && (descInput.dirty || descInput.touched || productForm.submitted)"
+            [class.is-valid]="descInput.valid && (descInput.dirty || descInput.touched)"
+          ></textarea>
+          @if (descInput.invalid && (descInput.dirty || descInput.touched || productForm.submitted)) {
+            <div class="invalid-feedback">
+              @if (descInput.errors?.['required']) {
+                Description is required.
+              }
+              @if (descInput.errors?.['minlength']) {
+                Description must be at least 10 characters long.
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Actions -->
+        <div class="col-12 mt-4 d-flex gap-3 justify-content-end">
+          <a routerLink="/products" class="btn btn-outline-secondary px-4 py-2 rounded-3">
+            Cancel
+          </a>
+          <button 
+            type="submit" 
+            class="btn btn-primary px-5 py-2 rounded-3 fw-bold shadow-sm"
+          >
+            {{ isEditMode ? 'Update Product' : 'Create Product' }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

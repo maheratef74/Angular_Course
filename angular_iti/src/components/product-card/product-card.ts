@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { Product } from '../../models/product';
 import { LimitWordsPipe } from '../../pipes/limit-words';
 import { ImageZoomDirective } from '../../directives/image-zoom';
@@ -7,7 +8,7 @@ import { ImageZoomDirective } from '../../directives/image-zoom';
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [CommonModule, LimitWordsPipe, ImageZoomDirective],
+  imports: [CommonModule, LimitWordsPipe, ImageZoomDirective, RouterLink],
   templateUrl: './product-card.html',
   styleUrls: ['./product-card.css']
 })
@@ -18,6 +19,8 @@ export class ProductCard {
 
   @Output() buy = new EventEmitter<Product>();
   @Output() select = new EventEmitter<{ productId: number; selected: boolean }>();
+  @Output() delete = new EventEmitter<number>();
+
 
   showFullDesc = signal(false);
 
@@ -37,5 +40,9 @@ export class ProductCard {
       productId: this.product.id,
       selected: checkbox.checked
     });
+  }
+
+  onDeleteClick(): void {
+    this.delete.emit(this.product.id);
   }
 }
