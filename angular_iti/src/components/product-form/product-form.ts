@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -10,7 +10,8 @@ import { Product } from '../../models/product';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './product-form.html',
-  styleUrls: ['./product-form.css']
+  styleUrls: ['./product-form.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductForm implements OnInit {
   isEditMode = false;

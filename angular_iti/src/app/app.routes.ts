@@ -1,25 +1,40 @@
 import { Routes } from '@angular/router';
-import { Products } from '../components/products/products';
-import { Login } from '../components/login/login';
-import { Register } from '../components/register/register';
 import { authGuard, loggedOutGuard } from '../guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'products', pathMatch: 'full' },
-  { path: 'login', component: Login, canActivate: [loggedOutGuard] },
-  { path: 'register', component: Register, canActivate: [loggedOutGuard] },
-  { path: 'products', component: Products, canActivate: [authGuard] },
-  { path: '**', redirectTo: 'products' }
-];
-import { ProductForm } from '../components/product-form/product-form';
-import { NotFound } from '../components/not-found/not-found';
-
-export const routes: Routes = [
-  { path: '', redirectTo: 'products', pathMatch: 'full' },
-  { path: 'products', component: Products },
-  { path: 'products/add', component: ProductForm },
-  { path: 'products/edit/:id', component: ProductForm },
-  { path: 'error', component: NotFound, data: { hideNavbar: true } },
+  { 
+    path: 'login', 
+    loadComponent: () => import('../components/login/login').then(m => m.Login),
+    canActivate: [loggedOutGuard] 
+  },
+  { 
+    path: 'register', 
+    loadComponent: () => import('../components/register/register').then(m => m.Register),
+    canActivate: [loggedOutGuard] 
+  },
+  {
+    path: '',
+    canActivateChild: [authGuard],
+    children: [
+      { 
+        path: 'products', 
+        loadComponent: () => import('../components/products/products').then(m => m.Products) 
+      },
+      { 
+        path: 'products/add', 
+        loadComponent: () => import('../components/product-form/product-form').then(m => m.ProductForm) 
+      },
+      { 
+        path: 'products/edit/:id', 
+        loadComponent: () => import('../components/product-form/product-form').then(m => m.ProductForm) 
+      }
+    ]
+  },
+  { 
+    path: 'error', 
+    loadComponent: () => import('../components/not-found/not-found').then(m => m.NotFound), 
+    data: { hideNavbar: true } 
+  },
   { path: '**', redirectTo: 'error' }
 ];
-

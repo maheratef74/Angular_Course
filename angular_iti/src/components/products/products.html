@@ -10,16 +10,25 @@
   </div>
 
   <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-    @for (product of products; track product.id) {
+    @for (product of products(); track product.id) {
       <div class="col">
-        <app-product-card 
-          [product]="product"
-          [isPurchased]="purchasedProductIds().has(product.id)"
-          [isSelected]="selectedProductIds().has(product.id)"
-          (buy)="onBuy($event)"
-          (select)="onSelect($event)"
-          (delete)="onDelete($event)"
-        ></app-product-card>
+        @defer (on interaction) {
+          <app-product-card 
+            [product]="product"
+            [isPurchased]="purchasedProductIds().has(product.id)"
+            [isSelected]="selectedProductIds().has(product.id)"
+            (buy)="onBuy($event)"
+            (select)="onSelect($event)"
+            (delete)="onDelete($event)"
+          ></app-product-card>
+        } @placeholder {
+          <div class="card h-100 shadow-sm border-0 p-5 text-center d-flex align-items-center justify-content-center cursor-pointer bg-light rounded-4" style="min-height: 400px;">
+            <div class="mb-3 fs-1">📦</div>
+            <h5 class="fw-bold mb-1">{{ product.title }}</h5>
+            <p class="text-secondary small mb-3">Click to load product card details</p>
+            <button class="btn btn-outline-primary btn-sm rounded-3 px-3">Load Info</button>
+          </div>
+        }
       </div>
     }
   </div>

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, signal } from '@angular/core';
+import { Component, Input, Output, EventEmitter, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Product } from '../../models/product';
@@ -10,7 +10,8 @@ import { ImageZoomDirective } from '../../directives/image-zoom';
   standalone: true,
   imports: [CommonModule, LimitWordsPipe, ImageZoomDirective, RouterLink],
   templateUrl: './product-card.html',
-  styleUrls: ['./product-card.css']
+  styleUrls: ['./product-card.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductCard {
   @Input() product!: Product;

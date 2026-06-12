@@ -7,6 +7,9 @@ export const serverRoutes: ServerRoute[] = [
   },
   {
     path: 'register',
+    renderMode: RenderMode.Server
+  },
+  {
     path: 'products/edit/:id',
     renderMode: RenderMode.Server
   },
@@ -15,5 +18,3 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Prerender
   }
 ];
-];
-

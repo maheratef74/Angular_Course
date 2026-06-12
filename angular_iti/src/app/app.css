@@ -1,0 +1,8 @@
+.loading-overlay {
+  background: rgba(255, 255, 255, 0.7) !important;
+  transition: all 0.3s ease;
+}
+
+body[data-bs-theme="dark"] .loading-overlay {
+  background: rgba(18, 18, 18, 0.75) !important;
+}

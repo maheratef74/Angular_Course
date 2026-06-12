@@ -1,4 +1,4 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, signal, computed, ChangeDetectionStrategy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Product } from '../../models/product';
@@ -10,14 +10,13 @@ import { ProductService } from '../../services/product.service';
   standalone: true,
   imports: [CommonModule, ProductCard, RouterLink],
   templateUrl: './products.html',
-  styleUrls: ['./products.css']
+  styleUrls: ['./products.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Products {
-  constructor(private productService: ProductService) {}
+  private readonly productService = inject(ProductService);
 
-  get products(): Product[] {
-    return this.productService.getProducts();
-  }
+  products = this.productService.getProducts;
 
   purchasedProductIds = signal<Set<number>>(new Set());
   selectedProductIds = signal<Set<number>>(new Set());
