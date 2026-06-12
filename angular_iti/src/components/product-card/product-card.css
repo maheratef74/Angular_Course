@@ -75,3 +75,55 @@ body[data-bs-theme="dark"] .select-checkbox {
 .fw-extrabold {
   font-weight: 800;
 }
+
+.card-actions-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 10;
+  display: flex;
+  gap: 6px;
+}
+
+.action-icon {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  border-radius: 50% !important;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* :host-context style parent can be used in child component */
+:host-context(.dark-theme) .product-card,
+:host-context(.dark) .product-card {
+  background-color: #1e1e1e !important;
+  border: 1px solid #333 !important;
+  color: #f1f1f1 !important;
+}
+
+:host-context(.dark-theme) .card-title,
+:host-context(.dark) .card-title {
+  color: #ffffff !important;
+}
+
+:host-context(.dark-theme) .text-secondary,
+:host-context(.dark) .text-secondary {
+  color: #b0b0b0 !important;
+}
+
+:host-context(.dark-theme) .action-icon,
+:host-context(.dark) .action-icon {
+  background-color: #2b2b2b !important;
+  color: #fff !important;
+  border-color: #444 !important;
+}
+
+:host-context(.dark-theme) .action-icon.text-danger,
+:host-context(.dark) .action-icon.text-danger {
+  color: #ff6b6b !important;
+}
+

@@ -4,6 +4,15 @@
       (change)="onCheckboxChange($event)" />
   </div>
 
+  <div class="card-actions-badge">
+    <a [routerLink]="['/products/edit', product.id]" class="btn btn-sm btn-light shadow-sm action-icon" title="Edit">
+      ✏️
+    </a>
+    <button (click)="onDeleteClick()" class="btn btn-sm btn-light shadow-sm text-danger action-icon" title="Delete">
+      🗑️
+    </button>
+  </div>
+
   <div class="product-img-wrapper overflow-hidden bg-light">
     <img [src]="product.thumbnail" [alt]="product.title" class="card-img-top product-img" appImageZoom />
   </div>
