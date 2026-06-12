@@ -1,0 +1,141 @@
+<div class="auth-page-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2 class="auth-title">Create Account</h2>
+      <p class="auth-subtitle">Join us to explore and manage premium products</p>
+    </div>
+
+    <!-- Error Alert Banner -->
+    @if (errorMessage) {
+      <div class="error-alert">
+        <span class="alert-icon">⚠️</span>
+        <span class="alert-text">{{ errorMessage }}</span>
+      </div>
+    }
+
+    <!-- Success Alert Banner -->
+    @if (successMessage) {
+      <div class="success-alert">
+        <span class="alert-icon">✅</span>
+        <span class="alert-text">{{ successMessage }}</span>
+      </div>
+    }
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <!-- Full Name Field -->
+      <div class="form-group" [class.has-error]="registerForm.get('fullName')?.touched && registerForm.get('fullName')?.invalid">
+        <label for="fullName" class="form-label">Full Name</label>
+        <div class="input-wrapper">
+          <span class="input-icon">👤</span>
+          <input 
+            type="text" 
+            id="fullName" 
+            formControlName="fullName" 
+            class="form-control" 
+            placeholder="John Doe"
+            autocomplete="name">
+        </div>
+        @if (registerForm.get('fullName')?.touched && registerForm.get('fullName')?.errors) {
+          <div class="error-message">
+            @if (registerForm.get('fullName')?.errors?.['required']) {
+              <span>Full Name is required.</span>
+            }
+            @if (registerForm.get('fullName')?.errors?.['minlength']) {
+              <span>Name must be at least 3 characters long.</span>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Email Field -->
+      <div class="form-group" [class.has-error]="registerForm.get('email')?.touched && registerForm.get('email')?.invalid">
+        <label for="email" class="form-label">Email Address</label>
+        <div class="input-wrapper">
+          <span class="input-icon">📧</span>
+          <input 
+            type="email" 
+            id="email" 
+            formControlName="email" 
+            class="form-control" 
+            placeholder="name@example.com"
+            autocomplete="email">
+        </div>
+        @if (registerForm.get('email')?.touched && registerForm.get('email')?.errors) {
+          <div class="error-message">
+            @if (registerForm.get('email')?.errors?.['required']) {
+              <span>Email is required.</span>
+            }
+            @if (registerForm.get('email')?.errors?.['email']) {
+              <span>Please enter a valid email address.</span>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group" [class.has-error]="registerForm.get('password')?.touched && registerForm.get('password')?.invalid">
+        <label for="password" class="form-label">Password</label>
+        <div class="input-wrapper">
+          <span class="input-icon">🔒</span>
+          <input 
+            type="password" 
+            id="password" 
+            formControlName="password" 
+            class="form-control" 
+            placeholder="••••••••"
+            autocomplete="new-password">
+        </div>
+        @if (registerForm.get('password')?.touched && registerForm.get('password')?.errors) {
+          <div class="error-message">
+            @if (registerForm.get('password')?.errors?.['required']) {
+              <span>Password is required.</span>
+            }
+            @if (registerForm.get('password')?.errors?.['minlength']) {
+              <span>Password must be at least 6 characters long.</span>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Confirm Password Field -->
+      <div class="form-group" [class.has-error]="(registerForm.get('confirmPassword')?.touched && registerForm.get('confirmPassword')?.invalid) || (registerForm.touched && registerForm.errors?.['passwordMismatch'])">
+        <label for="confirmPassword" class="form-label">Confirm Password</label>
+        <div class="input-wrapper">
+          <span class="input-icon">🔑</span>
+          <input 
+            type="password" 
+            id="confirmPassword" 
+            formControlName="confirmPassword" 
+            class="form-control" 
+            placeholder="••••••••"
+            autocomplete="new-password">
+        </div>
+        @if (registerForm.get('confirmPassword')?.touched && registerForm.get('confirmPassword')?.errors) {
+          <div class="error-message">
+            @if (registerForm.get('confirmPassword')?.errors?.['required']) {
+              <span>Please confirm your password.</span>
+            }
+          </div>
+        }
+        @if (registerForm.touched && registerForm.get('confirmPassword')?.valid && registerForm.errors?.['passwordMismatch']) {
+          <div class="error-message">
+            <span>Passwords do not match.</span>
+          </div>
+        }
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" [disabled]="registerForm.invalid || isLoading" class="btn-auth-submit">
+        @if (!isLoading) {
+          <span>Sign Up</span>
+        } @else {
+          <span class="spinner"></span>
+        }
+      </button>
+    </form>
+
+    <div class="auth-footer">
+      <p>Already have an account? <a routerLink="/login" class="auth-link">Sign In</a></p>
+    </div>
+  </div>
+</div>

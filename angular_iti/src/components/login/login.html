@@ -1,0 +1,81 @@
+<div class="auth-page-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2 class="auth-title">Welcome Back</h2>
+      <p class="auth-subtitle">Sign in to your account to continue shopping</p>
+    </div>
+
+    <!-- Error Alert Banner -->
+    @if (errorMessage) {
+      <div class="error-alert">
+        <span class="alert-icon">⚠️</span>
+        <span class="alert-text">{{ errorMessage }}</span>
+      </div>
+    }
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <!-- Email Field -->
+      <div class="form-group" [class.has-error]="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
+        <label for="email" class="form-label">Email Address</label>
+        <div class="input-wrapper">
+          <span class="input-icon">📧</span>
+          <input 
+            type="email" 
+            id="email" 
+            formControlName="email" 
+            class="form-control" 
+            placeholder="name@example.com"
+            autocomplete="email">
+        </div>
+        @if (loginForm.get('email')?.touched && loginForm.get('email')?.errors) {
+          <div class="error-message">
+            @if (loginForm.get('email')?.errors?.['required']) {
+              <span>Email is required.</span>
+            }
+            @if (loginForm.get('email')?.errors?.['email']) {
+              <span>Please enter a valid email address.</span>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group" [class.has-error]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+        <label for="password" class="form-label">Password</label>
+        <div class="input-wrapper">
+          <span class="input-icon">🔒</span>
+          <input 
+            type="password" 
+            id="password" 
+            formControlName="password" 
+            class="form-control" 
+            placeholder="••••••••"
+            autocomplete="current-password">
+        </div>
+        @if (loginForm.get('password')?.touched && loginForm.get('password')?.errors) {
+          <div class="error-message">
+            @if (loginForm.get('password')?.errors?.['required']) {
+              <span>Password is required.</span>
+            }
+            @if (loginForm.get('password')?.errors?.['minlength']) {
+              <span>Password must be at least 6 characters long.</span>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" [disabled]="loginForm.invalid || isLoading" class="btn-auth-submit">
+        @if (!isLoading) {
+          <span>Sign In</span>
+        } @else {
+          <span class="spinner"></span>
+        }
+      </button>
+    </form>
+
+    <div class="auth-footer">
+      <p>Don't have an account? <a routerLink="/register" class="auth-link">Sign Up</a></p>
+    </div>
+  </div>
+</div>

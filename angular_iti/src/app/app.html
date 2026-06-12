@@ -1,12 +1,36 @@
 <div class="container mt-4">
   @if (showNavbar()) {
     <header class="d-flex justify-content-between align-items-center pb-3 mb-4 border-bottom">
+      <div class="d-flex align-items-center text-decoration-none text-body">
+        <a routerLink="/" class="d-flex align-items-center text-decoration-none text-body">
       <div class="d-flex align-items-center gap-4">
         <a routerLink="/products" class="d-flex align-items-center text-decoration-none text-body">
           <span class="fs-3 fw-bold">
             ✨ Gadget<span class="text-primary">Store</span>
           </span>
         </a>
+      </div>
+      
+      <div class="d-flex align-items-center gap-3">
+        @if (isLoggedIn()) {
+          <a routerLink="/products" routerLinkActive="text-primary fw-bold" [routerLinkActiveOptions]="{exact: true}" class="text-decoration-none text-secondary fw-semibold small">Products</a>
+          <span class="text-muted fw-semibold small">Hi, {{ currentUser()?.fullName }}</span>
+          <button (click)="logout()" class="btn btn-outline-danger btn-sm px-3 py-1.5 fw-semibold rounded-3">
+            Logout
+          </button>
+        } @else {
+          <a routerLink="/login" routerLinkActive="text-primary fw-bold" class="text-decoration-none text-secondary fw-semibold small">Login</a>
+          <a routerLink="/register" routerLinkActive="text-primary fw-bold" class="text-decoration-none text-secondary fw-semibold small">Register</a>
+        }
+        
+        <button 
+          type="button" 
+          class="btn btn-outline-secondary d-flex align-items-center gap-2 theme-toggle-btn px-3 py-2 fw-semibold"
+          appThemeToggle
+        >
+          🌓 Mode Switch
+        </button>
+      </div>
         <nav class="d-flex gap-3">
           <a routerLink="/products" routerLinkActive="text-primary fw-bold" [routerLinkActiveOptions]="{exact: true}" class="text-decoration-none text-secondary">Products</a>
           <a routerLink="/products/add" routerLinkActive="text-primary fw-bold" class="text-decoration-none text-secondary">Add Product</a>
@@ -24,4 +48,3 @@
 
   <router-outlet></router-outlet>
 </div>
-
